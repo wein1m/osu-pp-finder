@@ -1,0 +1,14 @@
+ - make showdetails (showing beatmap title & sr)
+ - polish UI
+ - integrate with bash
+
+UI Goals:
+───────────────────────────────────
+🐇 Found 6 scores between 300pp - 400pp:
+
+ 1. 312.42pp | FREEDOM DiVE
+ 2. 327.15pp | Galaxy Collapse
+ 3. 354.88pp | ...
+───────────────────────────────────
+Total 300pp-ish scores: 6
+
