@@ -2,19 +2,16 @@ import requests
 import browser_cookie3
 import json
 
+user_id = input("Input User ID: ") or "37147404"
+
 
 def get_top_scores():
     cookies = browser_cookie3.brave(domain_name="osu.ppy.sh")
-    # url = (
-    #     "https://osu.ppy.sh/users/"
-    #     "37147404/extra-pages/top_ranks"
-    #     "?mode=mania"
-    # )
 
     url = (
         "https://osu.ppy.sh/users/"
-        "37147404/scores/best"
-        "?mode=mania&limit=100"
+        f"{user_id}/scores/best"
+        "?mode=mania&limit=200"
     )
 
     response = requests.get(url, cookies=cookies)
