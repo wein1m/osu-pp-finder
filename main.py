@@ -2,6 +2,7 @@ import requests
 import browser_cookie3
 import re
 import sys
+import json
 
 USER_DEFAULT = "37147404"
 PP_DEFAULT = "300"
@@ -30,10 +31,10 @@ show_details = False
 if show_details_prompt.lower() == 'y':
     show_details = True
 
-elif show_details_prompt.lower() == 'n':
-    show_details = False
-
 elif show_details_prompt == '':
+    show_details = True
+
+elif show_details_prompt.lower() == 'n':
     show_details = False
 
 else:
@@ -61,8 +62,16 @@ count = 0
 
 for score in scores:
     pp = score["pp"]
+    title = score["beatmapset"]["title"]
+    sr = round(score["beatmap"]["difficulty_rating"], 2)
+
     if pp >= min_pp and pp < max_pp:
+        # print(json.dumps(score, indent=2))
         count += 1
-        print(f"{count}. {pp}")
+        if (show_details):
+            print(f"{count}. {pp} | {title} (\U0001F7CA {sr})")
+        else:
+            print(f"{count}. {pp}")
+
 
 print(f"\n\nTotal {min_pp}pps:", count)
