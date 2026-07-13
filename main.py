@@ -1,7 +1,15 @@
 import requests
 import browser_cookie3
+import re
 
 user_id = input("Input User ID: ") or "37147404"
+
+match = re.search(r"/users/(\d+)", user_id)
+
+if match:
+    user_id = match.group(1)
+
+
 min_pp = input("Input Wanted PP: ") or "300"
 
 min_pp = int(min_pp)
