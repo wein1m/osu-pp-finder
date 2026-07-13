@@ -1,8 +1,12 @@
 import requests
 import browser_cookie3
-import json
 
 user_id = input("Input User ID: ") or "37147404"
+min_pp = input("Input Wanted PP: ") or "300"
+
+min_pp = int(min_pp)
+
+max_pp = min_pp + 100
 
 
 def get_top_scores():
@@ -25,8 +29,8 @@ count = 0
 
 for score in scores:
     pp = score["pp"]
-    if pp >= 300 and pp < 400:
+    if pp >= min_pp and pp < max_pp:
         count += 1
         print(f"{count}. {pp}")
 
-print("\n\nTotal 300s:", count)
+print(f"\n\nTotal {min_pp}pps:", count)
