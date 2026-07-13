@@ -58,20 +58,31 @@ def get_top_scores():
 
 scores = get_top_scores()
 
-count = 0
+results = []
 
 for score in scores:
     pp = score["pp"]
-    title = score["beatmapset"]["title"]
-    sr = round(score["beatmap"]["difficulty_rating"], 2)
+
+    if pp == None:
+        continue
 
     if pp >= min_pp and pp < max_pp:
-        # print(json.dumps(score, indent=2))
-        count += 1
+        results.append(score)
+
+
+if not results:
+    print(f"Uweeeghhh~ no score found between {min_pp}pp andd {max_pp}pp")
+else:
+    for i, score in enumerate(results, 1):
+        pp = score["pp"]
+
         if (show_details):
-            print(f"{count}. {pp} | {title} (\U0001F7CA {sr})")
+            title = score["beatmapset"]["title"]
+            sr = round(score["beatmap"]["difficulty_rating"], 2)
+
+            print(f"{i}. {pp} | {title} (\U0001F7CA {sr})")
         else:
-            print(f"{count}. {pp}")
+            print(f"{i}. {pp}")
 
 
-print(f"\n\nTotal {min_pp}pps:", count)
+print(f"\n\nTotal {min_pp}pps:", len(results))
