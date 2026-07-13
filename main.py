@@ -3,7 +3,16 @@ import browser_cookie3
 import re
 import sys
 
-user_id = input("Input User ID: ") or "37147404"
+USER_DEFAULT = "37147404"
+PP_DEFAULT = "300"
+
+
+def ask(prompt, default=''):
+    value = input(prompt).strip()
+    return value or default
+
+
+user_id = ask("Input User ID: ", USER_DEFAULT)
 
 match = re.search(r"/users/(\d+)", user_id)
 
@@ -11,22 +20,22 @@ if match:
     user_id = match.group(1)
 
 
-min_pp = input("Input Wanted PP: ") or "300"
-
-min_pp = int(min_pp)
-
+min_pp = int(ask("Input Wanted PP: ", PP_DEFAULT))
 max_pp = min_pp + 100
 
 
-show_details_prompt = input("Show Details (y/n): ")
+show_details_prompt = ask("Show Details (y/n): ")
 show_details = False
 
-if show_details_prompt.lower().strip() == 'y':
+if show_details_prompt.lower() == 'y':
     show_details = True
-elif show_details_prompt.lower().strip() == 'n':
+
+elif show_details_prompt.lower() == 'n':
     show_details = False
-elif show_details_prompt.strip() == '':
+
+elif show_details_prompt == '':
     show_details = False
+
 else:
     print("Only y/n pwease~!")
     sys.exit(1)
