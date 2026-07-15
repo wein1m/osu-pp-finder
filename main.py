@@ -2,7 +2,6 @@ import requests
 import browser_cookie3
 import re
 import sys
-import json
 
 USER_DEFAULT = "37147404"
 PP_DEFAULT = "300"
@@ -73,16 +72,22 @@ for score in scores:
 if not results:
     print(f"Uweeeghhh~ no score found between {min_pp}pp andd {max_pp}pp")
 else:
+    idx_width = len(str(len(results)))
+
+    pp_width = max(len(
+        f"{score['pp']:.2f}"
+    ) for score in results)
+
     for i, score in enumerate(results, 1):
-        pp = score["pp"]
+        pp = f"{score['pp']:.2f}"
 
         if (show_details):
             title = score["beatmapset"]["title"]
-            sr = round(score["beatmap"]["difficulty_rating"], 2)
+            sr = f"{score['beatmap']['difficulty_rating']:.2f}"
 
-            print(f"{i}. {pp} | {title} (\U0001F7CA {sr})")
+            print(f"{i:>{idx_width}}. {pp:>{pp_width}} | {title} (\U0001F7CA {sr})")
         else:
-            print(f"{i}. {pp}")
+            print(f"{i:>{idx_width}}. {pp:>{pp_width}}")
 
 
 print(f"\n\nTotal {min_pp}pps:", len(results))
