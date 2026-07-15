@@ -41,21 +41,53 @@ else:
     sys.exit(1)
 
 
-def get_top_scores():
-    cookies = browser_cookie3.brave(domain_name="osu.ppy.sh")
+def fetch_top_scores(url, cookies):
+    response = requests.get(url, cookies=cookies)
+    response.raise_for_status()
+    data = response.json()
 
-    url = (
+    return data["best"]["items"]
+
+
+def fetch_score_pages(url, cookies):
+    scores = []
+    offset = 5
+
+    for _ in range(4):
+        response = requests.get(url, cookies=cookies,
+                                params={'offset': offset})
+        response.raise_for_status()
+        data = response.json()
+        scores.extend(data)
+
+        offset += 50
+
+    return scores
+
+
+def fetch_all_scores():
+    cookies = browser_cookie3.brave(domain_name="osu.ppy.sh")
+    top_scores = []
+
+    score_pages_url = (
         "https://osu.ppy.sh/users/"
         f"{user_id}/scores/best"
-        "?mode=mania&limit=200"
+        "?mode=mania&limit=51"
     )
 
-    response = requests.get(url, cookies=cookies)
+    top_scores_url = (
+        "https://osu.ppy.sh/users/"
+        f"{user_id}/extra-pages/top_ranks"
+        "?mode=mania"
+    )
 
-    return response.json()
+    top_scores.extend(fetch_score_pages(score_pages_url, cookies))
+    top_scores.extend(fetch_top_scores(top_scores_url, cookies))
+
+    return top_scores
 
 
-scores = get_top_scores()
+scores = fetch_all_scores()
 
 results = []
 
