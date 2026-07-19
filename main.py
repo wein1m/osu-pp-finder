@@ -12,7 +12,12 @@ def ask(prompt, default=''):
     return value or default
 
 
-user_id = ask("Input User ID: ", USER_DEFAULT)
+print("=" * 35)
+print("{:^35}".format("osu!mania PP Finder"))
+print("=" * 35)
+
+
+user_id = ask("\n> User ID / Profile URL: ", USER_DEFAULT)
 
 match = re.search(r"/users/(\d+)", user_id)
 
@@ -20,11 +25,11 @@ if match:
     user_id = match.group(1)
 
 
-min_pp = int(ask("Input Wanted PP: ", PP_DEFAULT))
+min_pp = int(ask("> Target PP: ", PP_DEFAULT))
 max_pp = min_pp + 100
 
 
-show_details_prompt = ask("Show Details (y/n): ")
+show_details_prompt = ask("> Show score details? (y/n): ")
 show_details = False
 
 if show_details_prompt.lower() == 'y':
@@ -66,6 +71,7 @@ def fetch_score_pages(url, cookies):
 
 
 def fetch_all_scores():
+    print("\nChecking your scores...")
     cookies = browser_cookie3.brave(domain_name="osu.ppy.sh")
     top_scores = []
 
@@ -101,9 +107,12 @@ for score in scores:
         results.append(score)
 
 
+print("\n" + "-" * 35)
+
 if not results:
     print(f"Uweeeghhh~ no score found between {min_pp}pp andd {max_pp}pp")
 else:
+    print(f"Found {len(results)} scores between {min_pp}pp - {max_pp}pp: \n")
     idx_width = len(str(len(results)))
 
     pp_width = max(len(
@@ -121,5 +130,6 @@ else:
         else:
             print(f"{i:>{idx_width}}. {pp:>{pp_width}}")
 
+print("-" * 35)
 
-print(f"\n\nTotal {min_pp}pps:", len(results))
+print(f"\nTotal {min_pp}pp-ish scores:", len(results))
