@@ -1,7 +1,10 @@
 [project]
-name = "osu-scores"
+name = "mania-pp-finder"
 version = "0.1.0"
-description = "Add your description here"
+description = "A simple CLI tool to find osu!mania scores based on their PP values."
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "browser-cookie3>=0.20.1",
+    "requests>=2.34.2",
+]
