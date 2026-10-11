@@ -87,8 +87,8 @@ def fetch_all_scores():
         "?mode=mania"
     )
 
-    top_scores.extend(fetch_score_pages(score_pages_url, cookies))
     top_scores.extend(fetch_top_scores(top_scores_url, cookies))
+    top_scores.extend(fetch_score_pages(score_pages_url, cookies))
 
     return top_scores
 
