@@ -5,6 +5,7 @@ import sys
 
 USER_DEFAULT = "37147404"
 PP_DEFAULT = "300"
+LIMIT_DEFAULT = 10
 
 
 def ask(prompt, default=''):
@@ -25,8 +26,23 @@ if match:
     user_id = match.group(1)
 
 
-min_pp = int(ask("> Target PP: ", PP_DEFAULT))
-max_pp = min_pp + 100
+print("> Search mode:")
+print("1. Find scores around target PP (e.g. 300-400, 500-600)")
+print("2. Show top scores (e.g. top 10, top 20)")
+
+pp_choice = int(ask("Choice: "))
+
+if pp_choice == 1:
+    min_pp = int(ask("> Target PP: ", PP_DEFAULT))
+    max_pp = min_pp + 100
+
+elif pp_choice == 2:
+    limit_scores = int(
+        ask("> Number of scores to show (default 10): ", LIMIT_DEFAULT))
+
+else:
+    print("ERRORRRR~!! I can only process 1 or 2 hueueu TT")
+    sys.exit(1)
 
 
 show_details_prompt = ask("> Show score details? (y/n): ")
@@ -42,7 +58,7 @@ elif show_details_prompt.lower() == 'n':
     show_details = False
 
 else:
-    print("Only y/n pwease~!")
+    print("ERRORRRR~!! Only y/n pwease~!")
     sys.exit(1)
 
 
