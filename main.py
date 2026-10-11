@@ -111,24 +111,37 @@ def fetch_all_scores():
 
 scores = fetch_all_scores()
 
-results = []
+if pp_choice == 1:
+    results = []
 
-for score in scores:
-    pp = score["pp"]
+    for score in scores:
+        pp = score["pp"]
 
-    if pp == None:
-        continue
+        if pp == None:
+            continue
 
-    if pp >= min_pp and pp < max_pp:
-        results.append(score)
+        if pp >= min_pp and pp < max_pp:
+            results.append(score)
+
+elif pp_choice == 2:
+    results = scores[:limit_scores]
 
 
 print("\n" + "-" * 35)
 
 if not results:
-    print(f"Uweeeghhh~ no score found between {min_pp}pp andd {max_pp}pp")
+    if pp_choice == 1:
+        print(f"Uweeeghhh~ no score found between {min_pp}pp andd {max_pp}pp")
+    elif pp_choice == 2:
+        print(f"Uweeeghhh~ no score found")
 else:
-    print(f"Found {len(results)} scores between {min_pp}pp - {max_pp}pp: \n")
+    if pp_choice == 1:
+        print(
+            f"Found {len(results)} scores between {min_pp}pp - {max_pp}pp: \n")
+    elif pp_choice == 2:
+        print(
+            f"Found {len(results)} scores")
+
     idx_width = len(str(len(results)))
 
     pp_width = max(len(
@@ -148,4 +161,7 @@ else:
 
 print("-" * 35)
 
-print(f"\nTotal {min_pp}pp-ish scores:", len(results))
+if pp_choice == 1:
+    print(f"\nTotal {min_pp}pp-ish scores:", len(results))
+elif pp_choice == 2:
+    print(f"\nTotal scores i found:", len(results))
